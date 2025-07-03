@@ -1,5 +1,5 @@
 # diffrogram
-The reference Matlab utility for DF measurements in audio.
+The reference Matlab code for DF measurements in audio.
 
 ## Overview
 The function compares two audio files which usually represent reference and output signals of some device under test. It operates piece-wise with a specified time window and computes the array of difference levels and powers:
