@@ -1,10 +1,7 @@
-% Copyright (c)2014-2025 Serge Smirnoff (soundexpert.org)
 % The code covered by FreeBSD License; see the footer for full text.
 % Version 3.35; see the footer for ChangeLog.
 % The reference implementation of df-metric (Matlab 2014a)
 % Web: soundexpert.org/articles/-/blogs/visualization-of-distortion#part3
-% For your questions: ssmirnoff@soundexpert.org
-% For your donations: BTC 16kyGsEF7w9FiVukiyi2C8GSwjesrFyuty
 %
 % The function compares two audio files which usually represent reference
 % and output signals of some device under test.
@@ -873,9 +870,6 @@ return
 % - first public release
 
 % ------------------------- FreeBSD License -------------------------------
-
-% Copyright (c)2014-2025 Serge Smirnoff (soundexpert.org). All rights
-% reserved.
 %
 % Redistribution and use in source and binary forms, with or without
 % modification, are permitted provided that the following conditions are
