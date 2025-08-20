@@ -739,6 +739,7 @@ M = 0; % samples of OUT, +extra margin on both sides of OUT
 
 OverX = Fso / Fsr;
 if OverX > 1, ref = interpft(ref,round(length(ref)*OverX)); end
+if OverX < 1, [P,Q] = rat(Fso/Fsr); ref = resample(ref,P,Q); end
 
 if min(size(out)) == 2
     Ltest = round(W * OverX);
@@ -814,6 +815,9 @@ return
 
 % ---------------------------- Changelog ----------------------------------
 %
+% V3.36
+% - BugFix: SyncMargin now correctly handles the OUT files of lower
+% sampling rates.
 % V3.35
 % - Custom filtering of OUT with mg2020.mat was removed.
 % - now names of output images have REF file first, then OUT. WarpMargin
@@ -869,3 +873,4 @@ return
 % - direct colormap output without df and sp vectors
 % - added -Inf column (greyscale) to color map
 % - first public release
+
