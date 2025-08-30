@@ -287,7 +287,11 @@ if isempty(strfind(options, 'nowarp'))
 else % NoWarp case
     if Fso == Fsr
         disp('Warping: no')
-        warp = out; clear out
+        % warp = out;
+        LagRef = 1 * Fsr; % aligne with 1s in the middle of REF
+        if LagRef < Lref, LagRef = Lref; end
+        [~,warp] = CutByRef1(ref,out,LagRef);
+        clear out
         WarpMargin = 0; % for indication in diffrogram file name
     else
         disp('REF and OUT signals must have the same sample rate for NoWarp')
@@ -873,4 +877,5 @@ return
 % - direct colormap output without df and sp vectors
 % - added -Inf column (greyscale) to color map
 % - first public release
+
 
