@@ -820,6 +820,7 @@ return
 % ---------------------------- Changelog ----------------------------------
 %
 % V3.36
+% - Added cutting OUT by REF (length(REF)=length(OUT)) for noWarp mode
 % - BugFix: SyncMargin now correctly handles the OUT files of lower
 % sampling rates.
 % V3.35
@@ -877,5 +878,6 @@ return
 % - direct colormap output without df and sp vectors
 % - added -Inf column (greyscale) to color map
 % - first public release
+
 
 
