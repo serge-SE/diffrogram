@@ -1,6 +1,6 @@
 % The code covered by BSD 2-Clause License.
 % Copyright (c) 2025, Serge Smirnoff (soundexpert.org)
-% Version 3.35; see the footer for ChangeLog.
+% Version 3.36; see the footer for ChangeLog.
 % The reference implementation of df-metric (Matlab 2014a)
 % Web: soundexpert.org/articles/-/blogs/visualization-of-distortion#part3
 %
@@ -17,7 +17,7 @@
 
 function df = diffrogram33(fref, fout, Tw, options)
 disp('**********************************************')
-disp('***            Diffrogram v3.35            ***')
+disp('***            Diffrogram v3.36            ***')
 disp('***            soundexpert.org             ***')
 disp('**********************************************')
 
@@ -42,6 +42,18 @@ if ~isempty(strfind(options, 'colormap'))
     return
 end
 
+% Read REF
+[ref,Fsr] = audioread(fref);
+% Upsample REF to 48000 if lower 44100
+if Fsr < 44100
+    ref = interpft(ref,round(length(ref)*(48000/Fsr)));
+    Fsr = 48000;
+    disp('The REF signal was upsampled to 48000 Hz')
+end
+
+% Read OUT
+[out,Fso] = audioread(fout);
+
 % Frequency region of interest
 % Vector of freq. bands for diffrogram images (indexes)
 if ~isempty(strfind(options, 'octave1/6')) % 1/6 octave
@@ -53,9 +65,6 @@ else % 1/12 octave
     F0 = f01(1); F1 = f01(end);
     disp('1/12 octave bands diffrogram will be computed')
 end
-
-[ref,Fsr] = audioread(fref);
-[out,Fso] = audioread(fout);
 
 % Define SyncMargin in milliseconds
 if ~isempty(strfind(options, 'syncmargin:'))
@@ -316,7 +325,7 @@ imgname = [ ...
     num2str(Min,'%+8.2f') ']_' ...
     'wM' num2str(WarpMargin) '_' ...
     'sM' num2str(SyncMargin) '_' ...
-    'v335.png'];
+    'v336.png'];
 imwrite(imdf, imgname, 'bitdepth',16)
 disp('Waveform Diffrogram file:')
 disp(imgname)
@@ -333,7 +342,7 @@ imgname = [ ...
     num2str(Min,'%+8.2f') ']_' ...
     'wM' num2str(WarpMargin) '_' ...
     'sM' num2str(SyncMargin) '_' ...
-    'v335.png'];
+    'v336.png'];
 imwrite(imdf, imgname, 'bitdepth',16)
 disp('Magnitude Diffrogram file:')
 disp(imgname)
@@ -350,7 +359,7 @@ imgname = [ ...
     num2str(Min,'%+8.2f') ']_' ...
     'wM' num2str(WarpMargin) '_' ...
     'sM' num2str(SyncMargin) '_' ...
-    'v335.png'];
+    'v336.png'];
 imwrite(imdf, imgname, 'bitdepth',16)
 disp('Phase Diffrogram file:')
 disp(imgname)
@@ -820,6 +829,7 @@ return
 % ---------------------------- Changelog ----------------------------------
 %
 % V3.36
+% - Upsample REF to 48k if lower 44.1k
 % - Added cutting OUT by REF (length(REF)=length(OUT)) for noWarp mode
 % - BugFix: SyncMargin now correctly handles the OUT files of lower
 % sampling rates.
@@ -878,6 +888,7 @@ return
 % - direct colormap output without df and sp vectors
 % - added -Inf column (greyscale) to color map
 % - first public release
+
 
 
 
