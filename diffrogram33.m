@@ -1,7 +1,7 @@
 % The code covered by BSD 2-Clause License.
 % Copyright (c) 2025, Serge Smirnoff (soundexpert.org)
 % Version 3.36; see the footer for ChangeLog.
-% The reference implementation of df-metric (Matlab 2014a)
+% The reference implementation of df-metric (Matlab 2025b)
 % Web: soundexpert.org/articles/-/blogs/visualization-of-distortion#part3
 %
 % The function compares two audio files which usually represent reference
@@ -296,11 +296,11 @@ if isempty(strfind(options, 'nowarp'))
 else % NoWarp case
     if Fso == Fsr
         disp('Warping: no')
-        % warp = out;
-        LagRef = 1 * Fsr; % aligne with 1s in the middle of REF
-        if LagRef < Lref, LagRef = Lref; end
-        [~,warp] = CutByRef1(ref,out,LagRef);
-        clear out
+        warp = out;
+        % LagRef = 1 * Fsr; % aligne with 1s in the middle of REF
+        % if LagRef < Lref, LagRef = Lref; end
+        % [~,warp] = CutByRef1(ref,out,LagRef);
+        % clear out
         WarpMargin = 0; % for indication in diffrogram file name
     else
         disp('REF and OUT signals must have the same sample rate for NoWarp')
@@ -829,8 +829,9 @@ return
 % ---------------------------- Changelog ----------------------------------
 %
 % V3.36
+% - min DF value is the first now in diffrogram file name
+% - fixed minor compatibility issues with Matlab R2025b
 % - Upsample REF to 48k if lower 44.1k
-% - Added cutting OUT by REF (length(REF)=length(OUT)) for noWarp mode
 % - BugFix: SyncMargin now correctly handles the OUT files of lower
 % sampling rates.
 % V3.35
@@ -888,7 +889,3 @@ return
 % - direct colormap output without df and sp vectors
 % - added -Inf column (greyscale) to color map
 % - first public release
-
-
-
-
