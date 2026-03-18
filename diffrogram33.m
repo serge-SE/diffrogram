@@ -29,7 +29,7 @@ SRW = 574657; % Hz, the prime between close common multipliers of 44100 and
 options = lower(options);
 
 % Return ColorMap only
-if ~isempty(strfind(options, 'colormap'))
+if contains(options, 'colormap')
     si = textscan(options, '%s');
     tf = strncmp('colormap:', si{:}, 9);
     cc = char(si{:}(tf));
@@ -56,7 +56,7 @@ end
 
 % Frequency region of interest
 % Vector of freq. bands for diffrogram images (indexes)
-if ~isempty(strfind(options, 'octave1/6')) % 1/6 octave
+if contains(options, 'octave1/6') % 1/6 octave
     f01 = 440 .* (nthroot(2,6) .^ (-27:33)); % [19-19.9k]
     F0 = f01(1); F1 = f01(end);
     disp('1/6 octave bands diffrogram will be computed')
@@ -67,7 +67,7 @@ else % 1/12 octave
 end
 
 % Define SyncMargin in milliseconds
-if ~isempty(strfind(options, 'syncmargin:'))
+if contains(options, 'syncmargin:')
     si = textscan(options, '%s');
     tf = strncmp('syncmargin:', si{:}, 11);
     cc = char(si{:}(tf));
@@ -100,7 +100,7 @@ end
 % Define the mode of operation: Left|Right|Mono
 CHref = min(size(ref));
 CHout = min(size(out));
-if ~isempty(strfind(options, 'left'))
+if contains(options, 'left')
     if CHref == 1 && CHout == 2
         out = out(:,1);
     elseif CHref == 2 && CHout == 1
@@ -115,7 +115,7 @@ if ~isempty(strfind(options, 'left'))
     end
     Channel = 'left';
     [ref,out] = NormByRef1(ref,out, Fsr,Fso, F0,F1);
-elseif ~isempty(strfind(options, 'right'))
+elseif contains(options, 'right')
     if CHref == 1 && CHout == 2
         out = out(:,2);
     elseif CHref == 2 && CHout == 1
@@ -177,10 +177,10 @@ if F0s==F1s, F1s = F1s + 1; end
 f01s = round((Nq-1)/(Fsr/2).*f01) + 1;
 
 % Warp output audio (OUT) if required
-if isempty(strfind(options, 'nowarp'))
+if ~contains(options, 'nowarp')
     
     % Define WarpMargin in samples of REF
-    if ~isempty(strfind(options, 'warpmargin:'))
+    if contains(options, 'warpmargin:')
         si = textscan(options, '%s');
         tf = strncmp('warpmargin:', si{:}, 11);
         cc = char(si{:}(tf));
@@ -288,7 +288,7 @@ if isempty(strfind(options, 'nowarp'))
     [~,warp] = NormByRef1(ref,warp, Fsr,Fsr, F0,F1);
     
     % Output of warped audio file
-    if ~isempty(strfind(options, 'wav'))
+    if contains(options, 'wav')
         wavname = [fout '(' num2str(floor(Fso/1000)) ')_' ...
             'warp_' Channel '_' num2str(round(Tws*1000/Fsr)) '.wav'];
         audiowrite(wavname, warp, Fsr, 'BitsPerSample',32);
